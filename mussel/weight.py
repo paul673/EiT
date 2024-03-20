@@ -165,7 +165,7 @@ def calcculate_whole_mussel_weight_fracs(mean_shell_frac):
     
 
 def calculate_mussel_density(mean_shell_frac):
-    mean_shell_frac, mean_water_frac,mean_wet_flesh_frac=marius(mean_shell_frac)
+    mean_shell_frac, mean_water_frac,mean_wet_flesh_frac=calcculate_whole_mussel_weight_fracs(mean_shell_frac)
     areal = 750*10000 #m^2
     farm_area=3.5*1000 #m^2
     weight_produced = 350*1000*1000/mean_wet_flesh_frac # g
@@ -173,16 +173,5 @@ def calculate_mussel_density(mean_shell_frac):
     return area_density
 
 
-"""def respiration(time_period, shellweight_per_year,mussel_size):
-    respirationfactor=0.87 #mg O2/h mussel
-    # CO2 O2 ratio 1:1
-    # 1 hour = 0.000114079553 years
-    respirationfactor = respirationfactor * 10**(-9)/0.000114079553 # ton CO2/y mussel
-    total_shellweight = time_period*shellweight_per_year
-    shellweight_per_mussel = shell_weight(mussel_size)
-    mussels=total_shellweight/shellweight_per_mussel
-    mass_co2=respirationfactor*time_period*mussels
-    return mass_co2
-    # Times antall mussel 
-    # Antall mussel = shellvekt/shellvekt per mussel """
+
 
