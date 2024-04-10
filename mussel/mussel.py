@@ -53,7 +53,7 @@ def mussel_main():
         print()
         print(f"#"*print_width)
         print()
-        print_init_overview(molecule, mussel_farm_area, mussel_density, mussel_mass_density,mussel_mean_weight,shell_weight_fraction, print_width)
+        print_init_overview(molecule, mussel_farm_area, mussel_density, mussel_mass_density,mussel_mean_weight,shell_weight_fraction, print_width,mussel_harvest_size, time_period)
 
 
     print(f"#"*print_width)
