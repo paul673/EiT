@@ -1,6 +1,8 @@
 from utilities.utilities import get_mmass, get_co2_content, co2_per_mass
 from .weight import weightOutput, co2_per_area, calculate_mussel_density,calcculate_whole_mussel_weight_fracs
 from .respiration import respiration
+from .figures import generate_plot,plot_tornado
+from .results import calculate_result
 
 def print_init_overview(molecule, mussel_farm_area, mussel_density, mussel_mass_density,mussel_mean_weight,shell_weight_fraction, print_width,mussel_harvest_size,time_period):
     print(f"Initial values: ")
@@ -64,17 +66,63 @@ def mussel_main():
     print(f"{'CO2 emitted [ton]':<30}{emitted:>20_}")
     print(f"{'Netto CO2 stored [ton]':<30}{stored-emitted:>20_}")
 
+
+    print(f"#"*print_width)
+    print()
+    plot = input("Generate figures (y/N): ")
+
+    if plot == "y":
+        plotdict = {
+            "mussel_mass_density":{
+                "xlabel": r"Blåskjell per areal $\left[\text{g } m^{-2}\right]$",
+                "ylabel": r"CO$_2$ fanget $[ton]$",
+                "title":r"",
+                "unitscale":1
+            },
+            "mussel_farm_area":{
+                "xlabel": r"Areal $\left[km^{2}\right]$",
+                "ylabel": r"CO$_2$ fanget $[ton]$",
+                "title":r"",
+                "unitscale":10**(-6) 
+            },
+            "mussel_harvest_size":{
+                "xlabel": r"Blåskjell størrelse $\left[mm\right]$",
+                "ylabel": r"CO$_2$ fanget $[ton]$",
+                "title":r"",
+                "unitscale":1 
+            }
+
+        }
+        for variable, labels in plotdict.items():
+            generate_plot(variable,0.5,labels,
+                        mussel_mass_density=mussel_mass_density,
+                        mussel_farm_area=mussel_farm_area,
+                        time_period=time_period,
+                        molecule=molecule,
+                        mussel_harvest_size=mussel_harvest_size,
+                        shell_weight_fraction=shell_weight_fraction)
+        labels={
+            "mussel_mass_density":"Masse per areal",
+            "mussel_farm_area":"Areal",
+            "time_period":"Vekstperiode",
+            "molecule":"Molekyl",
+            "mussel_harvest_size":"Størrelse",
+            "shell_weight_fraction":"Skall fraksjon"
+        }
+        plot_tornado(0.5, labels,
+                        mussel_mass_density=mussel_mass_density,
+                        mussel_farm_area=mussel_farm_area,
+                        time_period=time_period,
+                        molecule=molecule,
+                        mussel_harvest_size=mussel_harvest_size,
+                        shell_weight_fraction=shell_weight_fraction)
+            
+
+        
+
+
+
     #co2_per_area(1000, 400000,mussel_mass_density,shell_weight_fraction, molecule, time_period)
 
 
 #NB! USE RESPIRATION SIZE DEPENDENT file:///C:/Users/paulj/Downloads/Growth_metabolism_and_lipid_peroxidation_in_Mytilu.pdf
-
-def calculate_result(mussel_mass_density,mussel_farm_area,time_period,molecule,mussel_harvest_size,shell_weight_fraction):
-
-    mass_mussel_per_year=mussel_mass_density*mussel_farm_area/(1000*1000)/time_period
-    shellweight_per_year = mussel_mass_density*mussel_farm_area*shell_weight_fraction/time_period
-    stored = co2_per_mass(shellweight_per_year, molecule)*10**(-6)
-    
-    emitted = respiration(time_period, shellweight_per_year,mussel_harvest_size)
-    netto = stored-emitted
-    return mass_mussel_per_year,stored,emitted,shellweight_per_year, netto
