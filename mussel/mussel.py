@@ -57,17 +57,24 @@ def mussel_main():
     print(f"#"*print_width)
     print()
     print("Result:")
-    print("mass shell: ", mussel_mass_density*mussel_farm_area/(1000*1000))
-    shellweight_per_year = mussel_mass_density*mussel_farm_area*shell_weight_fraction/time_period
-    stored = co2_per_mass(shellweight_per_year, molecule)*10**(-6)
+    mass_mussel_per_year,stored,emitted,shellweight_per_year, netto = calculate_result(mussel_mass_density,mussel_farm_area,time_period,molecule,mussel_harvest_size,shell_weight_fraction)
+
+    print(f"{'Mussel produced [ton/y]:':<30}{mass_mussel_per_year:>20_}")
     print(f"{'CO2 stored [ton]':<30}{stored:>20_}")
-    
-    emitted = respiration(time_period, shellweight_per_year,mussel_harvest_size)
     print(f"{'CO2 emitted [ton]':<30}{emitted:>20_}")
     print(f"{'Netto CO2 stored [ton]':<30}{stored-emitted:>20_}")
 
-    co2_per_area(1000, 400000,mussel_mass_density,shell_weight_fraction, molecule, time_period)
+    #co2_per_area(1000, 400000,mussel_mass_density,shell_weight_fraction, molecule, time_period)
 
 
 #NB! USE RESPIRATION SIZE DEPENDENT file:///C:/Users/paulj/Downloads/Growth_metabolism_and_lipid_peroxidation_in_Mytilu.pdf
 
+def calculate_result(mussel_mass_density,mussel_farm_area,time_period,molecule,mussel_harvest_size,shell_weight_fraction):
+
+    mass_mussel_per_year=mussel_mass_density*mussel_farm_area/(1000*1000)/time_period
+    shellweight_per_year = mussel_mass_density*mussel_farm_area*shell_weight_fraction/time_period
+    stored = co2_per_mass(shellweight_per_year, molecule)*10**(-6)
+    
+    emitted = respiration(time_period, shellweight_per_year,mussel_harvest_size)
+    netto = stored-emitted
+    return mass_mussel_per_year,stored,emitted,shellweight_per_year, netto
