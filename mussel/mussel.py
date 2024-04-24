@@ -75,19 +75,19 @@ def mussel_main():
         plotdict = {
             "mussel_mass_density":{
                 "xlabel": r"Blåskjell per areal $\left[\text{g } m^{-2}\right]$",
-                "ylabel": r"CO$_2$ fanget $[ton]$",
+                "ylabel": r"CO$_2$ fanget $[tonn]$",
                 "title":r"",
                 "unitscale":1
             },
             "mussel_farm_area":{
                 "xlabel": r"Areal $\left[km^{2}\right]$",
-                "ylabel": r"CO$_2$ fanget $[ton]$",
+                "ylabel": r"CO$_2$ fanget $[tonn]$",
                 "title":r"",
                 "unitscale":10**(-6) 
             },
             "mussel_harvest_size":{
                 "xlabel": r"Blåskjell størrelse $\left[mm\right]$",
-                "ylabel": r"CO$_2$ fanget $[ton]$",
+                "ylabel": r"CO$_2$ fanget $[tonn]$",
                 "title":r"",
                 "unitscale":1 
             }

@@ -72,7 +72,9 @@ def plot_tornado(frac, labels,**kwargs):
     ax.barh(list(resultdict.keys()), upper, height=width, left=center, color=colorpallete[1], label=f"{(1+frac)*100}% ", zorder=3, tick_label=label)
     ax.barh(list(resultdict.keys()), lower, height=width, left=center, color=colorpallete[6],label=f"{(frac)*100}%", zorder=3, tick_label=label)
     plt.legend()
-    plt.xlabel(r"CO$_2$ fanget $[ton]$")
+    plt.xlabel(r"CO$_2$ fanget $[tonn]$")
     plt.tight_layout()
     plt.savefig("mussel/figures/tornado.pdf")
     plt.show()
+
+
